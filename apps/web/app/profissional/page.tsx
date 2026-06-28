@@ -140,6 +140,9 @@ export default async function ProfissionalDashboard() {
         <span className="font-bold text-lg">VAPT</span>
         <div className="flex items-center gap-4">
           <span className="text-sm text-zinc-500">{session.email}</span>
+          <a href="/profissional/perfil" className="text-sm text-zinc-600 hover:text-zinc-900">
+            Perfil
+          </a>
           <form action={logout}>
             <button type="submit" className="text-sm text-zinc-600 hover:text-zinc-900">
               Sair

@@ -127,6 +127,41 @@ export class PlantaoService {
     return updated;
   }
 
+  async cancelar(plantaoId: string, userId: string, motivo?: string) {
+    const [estab] = await this.db
+      .select({ id: estabelecimentos.id })
+      .from(estabelecimentos)
+      .where(eq(estabelecimentos.userId, userId))
+      .limit(1);
+
+    if (!estab) throw new NotFoundException('Estabelecimento não encontrado.');
+
+    const [plantao] = await this.db
+      .select({ id: plantoes.id, status: plantoes.status, estabelecimentoId: plantoes.estabelecimentoId })
+      .from(plantoes)
+      .where(and(eq(plantoes.id, plantaoId), eq(plantoes.estabelecimentoId, estab.id)))
+      .limit(1);
+
+    if (!plantao) throw new NotFoundException('Plantão não encontrado.');
+
+    const cancelaveis = ['ABERTA', 'ACEITA', 'CONFIRMADA'];
+    if (!cancelaveis.includes(plantao.status)) {
+      throw new BadRequestException('Plantão não pode ser cancelado neste status.');
+    }
+
+    const [updated] = await this.db
+      .update(plantoes)
+      .set({
+        status: 'CANCELADA',
+        motivoCancelamento: motivo ?? null,
+        updatedAt: new Date(),
+      })
+      .where(eq(plantoes.id, plantaoId))
+      .returning();
+
+    return updated;
+  }
+
   async findCandidaturasDoPlantao(plantaoId: string, userId: string) {
     const [estab] = await this.db
       .select({ id: estabelecimentos.id })

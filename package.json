@@ -1,0 +1,22 @@
+{
+  "name": "vapt",
+  "private": true,
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "check-types": "turbo check-types",
+    "db:generate": "pnpm --filter @vapt/db run db:generate",
+    "db:migrate": "pnpm --filter @vapt/db run db:migrate",
+    "db:studio": "pnpm --filter @vapt/db run db:studio",
+    "db:push": "pnpm --filter @vapt/db run db:push"
+  },
+  "devDependencies": {
+    "turbo": "latest",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,35 @@
+export enum PlantaoStatus {
+  ABERTA = 'ABERTA',
+  ACEITA = 'ACEITA',
+  CONFIRMADA = 'CONFIRMADA',
+  EM_ANDAMENTO = 'EM_ANDAMENTO',
+  CONCLUIDA = 'CONCLUIDA',
+  AVALIADA = 'AVALIADA',
+  CANCELADA = 'CANCELADA',
+  NO_SHOW = 'NO_SHOW',
+}
+
+export enum TipoPlantao {
+  EMERGENCIA = 'EMERGENCIA',
+  FIM_DE_SEMANA = 'FIM_DE_SEMANA',
+  FERIAS = 'FERIAS',
+  COBERTURA_PERIODO = 'COBERTURA_PERIODO',
+}
+
+export enum TipoPorta {
+  ABERTA = 'ABERTA',
+  FECHADA = 'FECHADA',
+}
+
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  ESTABELECIMENTO = 'ESTABELECIMENTO',
+  PROFISSIONAL = 'PROFISSIONAL',
+}
+
+export enum DuracaoPlantao {
+  H12 = 'H12',
+  H24 = 'H24',
+  SEMANA = 'SEMANA',
+  PERSONALIZADO = 'PERSONALIZADO',
+}

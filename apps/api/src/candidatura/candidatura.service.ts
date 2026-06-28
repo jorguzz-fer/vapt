@@ -169,8 +169,12 @@ export class CandidaturaService {
         mensagem: candidaturas.mensagem,
         createdAt: candidaturas.createdAt,
         updatedAt: candidaturas.updatedAt,
+        plantaoStatus: plantoes.status,
+        plantaoLocalizacao: plantoes.localizacao,
+        plantaoDataInicio: plantoes.dataInicio,
       })
       .from(candidaturas)
+      .innerJoin(plantoes, eq(candidaturas.plantaoId, plantoes.id))
       .where(eq(candidaturas.profissionalId, prof.id))
       .orderBy(desc(candidaturas.createdAt));
   }

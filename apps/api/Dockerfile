@@ -25,7 +25,7 @@ FROM deps AS deploy
 COPY packages/shared packages/shared
 COPY packages/db packages/db
 COPY apps/api apps/api
-RUN pnpm --filter @vapt/api --prod deploy /deploy/api
+RUN pnpm --filter @vapt/api deploy --prod --legacy /deploy/api
 
 # ── Production image ──────────────────────────────────────────────────────────
 FROM node:22-alpine AS runner

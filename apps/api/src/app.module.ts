@@ -8,6 +8,7 @@ import { PlantaoModule } from './plantao/plantao.module';
 import { CandidaturaModule } from './candidatura/candidatura.module';
 import { AdminModule } from './admin/admin.module';
 import { AvaliacaoModule } from './avaliacao/avaliacao.module';
+import { PerfilModule } from './perfil/perfil.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AvaliacaoModule } from './avaliacao/avaliacao.module';
     CandidaturaModule,
     AdminModule,
     AvaliacaoModule,
+    PerfilModule,
   ],
 })
 export class AppModule {}

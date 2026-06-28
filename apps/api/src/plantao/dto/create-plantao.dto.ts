@@ -4,7 +4,6 @@ import {
   IsInt,
   IsNumber,
   IsOptional,
-  IsPositive,
   IsString,
   Length,
   Max,
@@ -33,7 +32,7 @@ export class CreatePlantaoDto {
   especialidade!: Especialidade;
 
   @IsNumber({ maxDecimalPlaces: 2 })
-  @IsPositive()
+  @Min(20, { message: 'Valor mínimo por hora é R$20,00.' })
   @Type(() => Number)
   valorProposto!: number;
 

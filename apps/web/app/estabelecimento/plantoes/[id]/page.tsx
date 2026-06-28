@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { apiRequest } from '@/lib/api';
 import GestaoButtons from './GestaoButtons';
 import ConcluirAvaliarForm from './ConcluirAvaliarForm';
+import CancelarPlantaoForm from './CancelarPlantaoForm';
 
 const STATUS_LABEL: Record<string, string> = {
   ABERTA: 'Aberta',
@@ -165,6 +166,11 @@ export default async function PlantaoDetailPage({ params }: { params: Promise<{ 
             status={plantao.status}
             jaAvaliou={jaAvaliou}
           />
+        </div>
+
+        {/* Cancelar */}
+        <div className="mb-6">
+          <CancelarPlantaoForm plantaoId={plantao.id} status={plantao.status} />
         </div>
 
         {/* Candidaturas */}

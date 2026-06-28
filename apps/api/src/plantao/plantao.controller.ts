@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { PlantaoService } from './plantao.service';
 import { CreatePlantaoDto } from './dto/create-plantao.dto';
+import { CancelarPlantaoDto } from './dto/cancelar-plantao.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -49,5 +50,15 @@ export class PlantaoController {
   @Roles(UserRole.ESTABELECIMENTO)
   concluir(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
     return this.plantaoService.concluir(id, user.sub);
+  }
+
+  @Patch(':id/cancelar')
+  @Roles(UserRole.ESTABELECIMENTO)
+  cancelar(
+    @Param('id') id: string,
+    @Body() dto: CancelarPlantaoDto,
+    @CurrentUser() user: JwtPayload,
+  ) {
+    return this.plantaoService.cancelar(id, user.sub, dto.motivo);
   }
 }

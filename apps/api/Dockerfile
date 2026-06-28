@@ -25,6 +25,7 @@ FROM deps AS deploy
 COPY packages/shared packages/shared
 COPY packages/db packages/db
 COPY apps/api apps/api
+RUN pnpm --filter @vapt/shared build && pnpm --filter @vapt/db build
 RUN pnpm --filter @vapt/api deploy --prod --legacy /deploy/api
 
 # ── Production image ──────────────────────────────────────────────────────────

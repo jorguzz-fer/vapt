@@ -6,6 +6,8 @@ module.exports = function (options) {
         if (!request) return callback();
         // Bundle @vapt/* workspace packages into the output
         if (request.startsWith('@vapt/')) return callback();
+        // Bundle postgres — 'commonjs' externalization breaks TS default import interop
+        if (request === 'postgres') return callback();
         // Bundle relative and absolute imports
         if (request.startsWith('.') || request.startsWith('/')) return callback();
         // Externalize real node_modules

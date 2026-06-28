@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { apiRequest } from '@/lib/api';
 import GestaoButtons from './GestaoButtons';
+import ConcluirAvaliarForm from './ConcluirAvaliarForm';
 
 const STATUS_LABEL: Record<string, string> = {
   ABERTA: 'Aberta',
@@ -72,6 +73,13 @@ async function getCandidaturas(id: string): Promise<CandidaturaComProfissional[]
   return res.json();
 }
 
+async function getJaAvaliou(plantaoId: string): Promise<boolean> {
+  const res = await apiRequest(`/avaliacoes/plantao/${plantaoId}/minha`);
+  if (!res.ok) return false;
+  const data = await res.json();
+  return data.jaAvaliou ?? false;
+}
+
 function formatDate(iso: string) {
   return new Date(iso).toLocaleString('pt-BR', {
     day: '2-digit',
@@ -87,7 +95,11 @@ export default async function PlantaoDetailPage({ params }: { params: Promise<{ 
   if (!session || session.role !== 'ESTABELECIMENTO') redirect('/login');
 
   const { id } = await params;
-  const [plantao, candidaturas] = await Promise.all([getPlantao(id), getCandidaturas(id)]);
+  const [plantao, candidaturas, jaAvaliou] = await Promise.all([
+    getPlantao(id),
+    getCandidaturas(id),
+    getJaAvaliou(id),
+  ]);
 
   if (!plantao) redirect('/estabelecimento');
 
@@ -144,6 +156,15 @@ export default async function PlantaoDetailPage({ params }: { params: Promise<{ 
               {plantao.observacoes}
             </div>
           )}
+        </div>
+
+        {/* Concluir / Avaliar */}
+        <div className="mb-6">
+          <ConcluirAvaliarForm
+            plantaoId={plantao.id}
+            status={plantao.status}
+            jaAvaliou={jaAvaliou}
+          />
         </div>
 
         {/* Candidaturas */}

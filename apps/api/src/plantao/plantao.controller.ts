@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { PlantaoService } from './plantao.service';
 import { CreatePlantaoDto } from './dto/create-plantao.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -43,5 +43,11 @@ export class PlantaoController {
   @Roles(UserRole.ESTABELECIMENTO)
   findCandidaturas(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
     return this.plantaoService.findCandidaturasDoPlantao(id, user.sub);
+  }
+
+  @Patch(':id/concluir')
+  @Roles(UserRole.ESTABELECIMENTO)
+  concluir(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.plantaoService.concluir(id, user.sub);
   }
 }

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { logout } from '@/app/actions/auth';
 import { apiRequest } from '@/lib/api';
 import CandidaturaButton from './CandidaturaButton';
+import AvaliarProfissionalForm from './AvaliarProfissionalForm';
 
 const ESPECIALIDADE_LABEL: Record<string, string> = {
   PEQUENOS_ANIMAIS: 'Pequenos animais',
@@ -31,6 +32,22 @@ const CANDIDATURA_LABEL: Record<string, string> = {
   REJEITADA: 'Rejeitada',
 };
 
+const PLANTAO_STATUS_COLOR: Record<string, string> = {
+  ACEITA: 'bg-blue-100 text-blue-700',
+  CONFIRMADA: 'bg-blue-100 text-blue-700',
+  EM_ANDAMENTO: 'bg-yellow-100 text-yellow-700',
+  CONCLUIDA: 'bg-zinc-100 text-zinc-600',
+  AVALIADA: 'bg-green-100 text-green-700',
+};
+
+const PLANTAO_STATUS_LABEL: Record<string, string> = {
+  ACEITA: 'Selecionado',
+  CONFIRMADA: 'Confirmado',
+  EM_ANDAMENTO: 'Em andamento',
+  CONCLUIDA: 'Concluído — avaliar',
+  AVALIADA: 'Avaliado',
+};
+
 interface Plantao {
   id: string;
   tipo: string;
@@ -47,7 +64,11 @@ interface Candidatura {
   id: string;
   plantaoId: string;
   status: string;
+  mensagem?: string;
   createdAt: string;
+  plantaoStatus?: string;
+  plantaoLocalizacao?: string;
+  plantaoDataInicio?: string;
 }
 
 async function getPlantoes(): Promise<Plantao[]> {
@@ -60,6 +81,13 @@ async function getMimasCandidaturas(): Promise<Candidatura[]> {
   const res = await apiRequest('/candidaturas/minhas');
   if (!res.ok) return [];
   return res.json();
+}
+
+async function getJaAvaliou(plantaoId: string): Promise<boolean> {
+  const res = await apiRequest(`/avaliacoes/plantao/${plantaoId}/minha`);
+  if (!res.ok) return false;
+  const data = await res.json();
+  return data.jaAvaliou ?? false;
 }
 
 function formatDate(iso: string) {
@@ -82,6 +110,30 @@ export default async function ProfissionalDashboard() {
 
   const candidaturaPorPlantao = new Set(candidaturas.map((c) => c.plantaoId));
 
+  // Candidaturas ACEITA com plantão CONCLUIDA ou AVALIADA → needs rating check
+  const candidaturasComPlantao = candidaturas.filter(
+    (c) =>
+      c.status === 'ACEITA' &&
+      c.plantaoStatus &&
+      ['CONCLUIDA', 'AVALIADA'].includes(c.plantaoStatus),
+  );
+
+  const jaAvaliouMap: Record<string, boolean> = {};
+  await Promise.all(
+    candidaturasComPlantao.map(async (c) => {
+      jaAvaliouMap[c.plantaoId] = await getJaAvaliou(c.plantaoId);
+    }),
+  );
+
+  const candidaturasAtivas = candidaturas.filter(
+    (c) =>
+      !(
+        c.status === 'ACEITA' &&
+        c.plantaoStatus &&
+        ['CONCLUIDA', 'AVALIADA'].includes(c.plantaoStatus)
+      ),
+  );
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b px-6 py-4 flex items-center justify-between">
@@ -97,6 +149,44 @@ export default async function ProfissionalDashboard() {
       </header>
 
       <main className="flex-1 p-6 max-w-4xl mx-auto w-full space-y-10">
+
+        {/* Plantões para avaliar */}
+        {candidaturasComPlantao.length > 0 && (
+          <section>
+            <h2 className="text-xl font-bold mb-4">Plantões para avaliar</h2>
+            <div className="space-y-3">
+              {candidaturasComPlantao.map((c) => (
+                <div key={c.id} className="border rounded-xl p-5 bg-white">
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <div>
+                      <p className="font-medium text-zinc-900">{c.plantaoLocalizacao ?? '—'}</p>
+                      {c.plantaoDataInicio && (
+                        <p className="text-xs text-zinc-500 mt-0.5">
+                          {formatDate(c.plantaoDataInicio)}
+                        </p>
+                      )}
+                    </div>
+                    {c.plantaoStatus && (
+                      <span
+                        className={`text-xs font-medium px-2 py-0.5 rounded-full ${PLANTAO_STATUS_COLOR[c.plantaoStatus] ?? 'bg-zinc-100 text-zinc-600'}`}
+                      >
+                        {PLANTAO_STATUS_LABEL[c.plantaoStatus] ?? c.plantaoStatus}
+                      </span>
+                    )}
+                  </div>
+                  {c.plantaoStatus === 'CONCLUIDA' ? (
+                    <AvaliarProfissionalForm
+                      plantaoId={c.plantaoId}
+                      jaAvaliou={jaAvaliouMap[c.plantaoId] ?? false}
+                    />
+                  ) : (
+                    <p className="text-xs text-green-600 mt-1">Plantão avaliado por ambas as partes.</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section>
           <h2 className="text-xl font-bold mb-4">Plantões disponíveis</h2>
@@ -142,15 +232,20 @@ export default async function ProfissionalDashboard() {
           )}
         </section>
 
-        {candidaturas.length > 0 && (
+        {candidaturasAtivas.length > 0 && (
           <section>
             <h2 className="text-xl font-bold mb-4">Minhas candidaturas</h2>
             <div className="space-y-2">
-              {candidaturas.map((c) => (
+              {candidaturasAtivas.map((c) => (
                 <div key={c.id} className="border rounded-xl px-5 py-3 bg-white flex items-center justify-between">
-                  <p className="text-xs text-zinc-500">
-                    Enviada em {new Date(c.createdAt).toLocaleDateString('pt-BR')}
-                  </p>
+                  <div>
+                    <p className="text-sm font-medium text-zinc-800">
+                      {c.plantaoLocalizacao ?? 'Plantão'}
+                    </p>
+                    <p className="text-xs text-zinc-400 mt-0.5">
+                      Enviada em {new Date(c.createdAt).toLocaleDateString('pt-BR')}
+                    </p>
+                  </div>
                   <span
                     className={`text-xs font-medium px-2 py-0.5 rounded-full ${CANDIDATURA_COLOR[c.status] ?? 'bg-zinc-100 text-zinc-600'}`}
                   >

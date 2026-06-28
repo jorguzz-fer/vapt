@@ -13,14 +13,14 @@ COPY apps/api/package.json apps/api/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile
 
-# ── Build ─────────────────────────────────────────────────────────────────────
+# ── Build (webpack bundles @vapt/* into dist/main.js) ─────────────────────────────
 FROM deps AS build
 COPY packages/shared packages/shared
 COPY packages/db packages/db
 COPY apps/api apps/api
 RUN pnpm --filter @vapt/api build
 
-# ── Deploy (flat node_modules, no symlinks) ───────────────────────────────────
+# ── Deploy (prod node_modules, no workspace packages needed) ───────────────────
 FROM deps AS deploy
 COPY packages/shared packages/shared
 COPY packages/db packages/db

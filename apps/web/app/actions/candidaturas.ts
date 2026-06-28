@@ -22,3 +22,38 @@ export async function candidatar(_: unknown, formData: FormData) {
 
   revalidatePath('/profissional');
 }
+
+export async function aceitarCandidatura(_: unknown, formData: FormData) {
+  const candidaturaId = formData.get('candidaturaId') as string;
+  const plantaoId = formData.get('plantaoId') as string;
+
+  const res = await apiRequest(`/candidaturas/${candidaturaId}/aceitar`, {
+    method: 'PATCH',
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const msg = Array.isArray(body.message) ? body.message[0] : body.message;
+    return { error: msg || 'Erro ao aceitar candidatura.' };
+  }
+
+  revalidatePath(`/estabelecimento/plantoes/${plantaoId}`);
+  revalidatePath('/estabelecimento');
+}
+
+export async function rejeitarCandidatura(_: unknown, formData: FormData) {
+  const candidaturaId = formData.get('candidaturaId') as string;
+  const plantaoId = formData.get('plantaoId') as string;
+
+  const res = await apiRequest(`/candidaturas/${candidaturaId}/rejeitar`, {
+    method: 'PATCH',
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const msg = Array.isArray(body.message) ? body.message[0] : body.message;
+    return { error: msg || 'Erro ao rejeitar candidatura.' };
+  }
+
+  revalidatePath(`/estabelecimento/plantoes/${plantaoId}`);
+}

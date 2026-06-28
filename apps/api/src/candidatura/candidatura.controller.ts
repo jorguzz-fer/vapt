@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { CandidaturaService } from './candidatura.service';
 import { CreateCandidaturaDto } from './dto/create-candidatura.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -25,5 +25,17 @@ export class CandidaturaController {
   @Roles(UserRole.PROFISSIONAL)
   findMinhas(@CurrentUser() user: JwtPayload) {
     return this.candidaturaService.findByProfissional(user.sub);
+  }
+
+  @Patch(':id/aceitar')
+  @Roles(UserRole.ESTABELECIMENTO)
+  aceitar(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.candidaturaService.aceitar(id, user.sub);
+  }
+
+  @Patch(':id/rejeitar')
+  @Roles(UserRole.ESTABELECIMENTO)
+  rejeitar(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.candidaturaService.rejeitar(id, user.sub);
   }
 }

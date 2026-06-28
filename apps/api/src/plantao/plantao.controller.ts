@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { PlantaoService } from './plantao.service';
 import { CreatePlantaoDto } from './dto/create-plantao.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -31,5 +31,17 @@ export class PlantaoController {
   @Roles(UserRole.PROFISSIONAL, UserRole.ADMIN)
   findAbertos() {
     return this.plantaoService.findAbertos();
+  }
+
+  @Get(':id')
+  @Roles(UserRole.ESTABELECIMENTO)
+  findById(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.plantaoService.findByIdParaEstabelecimento(id, user.sub);
+  }
+
+  @Get(':id/candidaturas')
+  @Roles(UserRole.ESTABELECIMENTO)
+  findCandidaturas(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.plantaoService.findCandidaturasDoPlantao(id, user.sub);
   }
 }

@@ -109,7 +109,7 @@ export default async function EstabelecimentoDashboard() {
         ) : (
           <div className="space-y-3">
             {plantoes.map((p) => (
-              <div key={p.id} className="border rounded-xl p-5 bg-white hover:border-zinc-300 transition-colors">
+              <Link key={p.id} href={`/estabelecimento/plantoes/${p.id}`} className="block border rounded-xl p-5 bg-white hover:border-zinc-300 transition-colors">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
@@ -136,7 +136,7 @@ export default async function EstabelecimentoDashboard() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

@@ -8,7 +8,7 @@ import {
   pgEnum,
 } from 'drizzle-orm/pg-core';
 import { estabelecimentos } from './estabelecimentos';
-import { profissionais } from './profissionais';
+import { profissionais, especialidadeEnum } from './profissionais';
 
 export const plantaoStatusEnum = pgEnum('plantao_status', [
   'ABERTA',
@@ -37,6 +37,8 @@ export const duracaoEnum = pgEnum('duracao_plantao', [
   'PERSONALIZADO',
 ]);
 
+export { especialidadeEnum };
+
 export const plantoes = pgTable('plantoes', {
   id: uuid('id').primaryKey().defaultRandom(),
   estabelecimentoId: uuid('estabelecimento_id')
@@ -47,10 +49,14 @@ export const plantoes = pgTable('plantoes', {
   tipo: tipoPlantaoEnum('tipo').notNull(),
   tipoPorta: tipoPortaEnum('tipo_porta').notNull(),
   duracao: duracaoEnum('duracao').notNull(),
+  especialidade: especialidadeEnum('especialidade').notNull(),
   valorProposto: numeric('valor_proposto', { precision: 10, scale: 2 }).notNull(),
+  valorFinal: numeric('valor_final', { precision: 10, scale: 2 }),
   volumePacientes: integer('volume_pacientes'),
+  cep: varchar('cep', { length: 8 }).notNull(),
   localizacao: varchar('localizacao', { length: 500 }).notNull(),
   observacoes: varchar('observacoes', { length: 1000 }),
+  motivoCancelamento: varchar('motivo_cancelamento', { length: 500 }),
   dataInicio: timestamp('data_inicio').notNull(),
   dataFim: timestamp('data_fim').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),

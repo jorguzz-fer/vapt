@@ -1,7 +1,5 @@
-import { Body, Controller, Get, Patch, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch } from '@nestjs/common';
 import { PerfilService } from './perfil.service';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import {
   CurrentUser,
@@ -12,7 +10,6 @@ import { UpdatePerfilProfissionalDto } from './dto/update-perfil-profissional.dt
 import { UpdatePerfilEstabelecimentoDto } from './dto/update-perfil-estabelecimento.dto';
 
 @Controller('perfil')
-@UseGuards(JwtAuthGuard, RolesGuard)
 export class PerfilController {
   constructor(private readonly perfilService: PerfilService) {}
 

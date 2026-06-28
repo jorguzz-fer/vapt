@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { DatabaseModule } from './database/database.module';
@@ -9,6 +10,8 @@ import { CandidaturaModule } from './candidatura/candidatura.module';
 import { AdminModule } from './admin/admin.module';
 import { AvaliacaoModule } from './avaliacao/avaliacao.module';
 import { PerfilModule } from './perfil/perfil.module';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { RolesGuard } from './auth/guards/roles.guard';
 
 @Module({
   imports: [
@@ -22,6 +25,10 @@ import { PerfilModule } from './perfil/perfil.module';
     AdminModule,
     AvaliacaoModule,
     PerfilModule,
+  ],
+  providers: [
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
   ],
 })
 export class AppModule {}

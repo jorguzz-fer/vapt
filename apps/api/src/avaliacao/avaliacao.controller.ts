@@ -1,8 +1,6 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AvaliacaoService } from './avaliacao.service';
 import { CreateAvaliacaoDto } from './dto/create-avaliacao.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import {
   CurrentUser,
@@ -11,7 +9,6 @@ import {
 import { UserRole } from '@vapt/shared';
 
 @Controller('avaliacoes')
-@UseGuards(JwtAuthGuard, RolesGuard)
 export class AvaliacaoController {
   constructor(private readonly avaliacaoService: AvaliacaoService) {}
 

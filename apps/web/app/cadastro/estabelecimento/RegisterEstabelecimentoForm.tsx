@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 export function RegisterEstabelecimentoForm() {
   const [state, action, pending] = useActionState(registerEstabelecimento, undefined);
+  const v = state?.values;
 
   return (
     <form action={action} className="space-y-4">
@@ -17,6 +18,7 @@ export function RegisterEstabelecimentoForm() {
           name="razaoSocial"
           type="text"
           required
+          defaultValue={v?.razaoSocial ?? ''}
           className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
         />
       </div>
@@ -31,6 +33,7 @@ export function RegisterEstabelecimentoForm() {
           required
           maxLength={14}
           placeholder="00000000000000"
+          defaultValue={v?.cnpj ?? ''}
           className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
         />
       </div>
@@ -45,6 +48,7 @@ export function RegisterEstabelecimentoForm() {
           required
           maxLength={8}
           placeholder="00000000"
+          defaultValue={v?.cep ?? ''}
           className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
         />
       </div>
@@ -57,6 +61,7 @@ export function RegisterEstabelecimentoForm() {
           name="endereco"
           type="text"
           required
+          defaultValue={v?.endereco ?? ''}
           className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
         />
       </div>
@@ -70,6 +75,7 @@ export function RegisterEstabelecimentoForm() {
           type="email"
           required
           autoComplete="email"
+          defaultValue={v?.email ?? ''}
           className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
         />
       </div>

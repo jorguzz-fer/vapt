@@ -10,17 +10,5 @@ export async function apiRequest(path: string, init: RequestInit = {}) {
     ...(init.headers as Record<string, string>),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
-
-  // TEMP DIAGNOSTIC — never logs the token value, only presence/length.
-  console.log(
-    `[apiRequest] ${init.method ?? 'GET'} ${path} | token=${token ? `present(${token.length})` : 'MISSING'} | API_URL=${API_URL}`,
-  );
-
-  const res = await fetch(`${API_URL}${path}`, { ...init, headers });
-
-  if (!res.ok) {
-    console.log(`[apiRequest] ${init.method ?? 'GET'} ${path} -> ${res.status} ${res.statusText}`);
-  }
-
-  return res;
+  return fetch(`${API_URL}${path}`, { ...init, headers });
 }

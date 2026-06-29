@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 export function RegisterProfissionalForm() {
   const [state, action, pending] = useActionState(registerProfissional, undefined);
+  const v = state?.values;
 
   return (
     <form action={action} className="space-y-4">
@@ -18,6 +19,7 @@ export function RegisterProfissionalForm() {
           type="text"
           required
           autoComplete="name"
+          defaultValue={v?.nomeCompleto ?? ''}
           className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
         />
       </div>
@@ -31,6 +33,7 @@ export function RegisterProfissionalForm() {
           type="text"
           required
           placeholder="Ex: SP-12345"
+          defaultValue={v?.crmv ?? ''}
           className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
         />
       </div>
@@ -44,6 +47,7 @@ export function RegisterProfissionalForm() {
           type="email"
           required
           autoComplete="email"
+          defaultValue={v?.email ?? ''}
           className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
         />
       </div>

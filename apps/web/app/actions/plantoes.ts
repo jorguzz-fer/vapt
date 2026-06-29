@@ -4,22 +4,33 @@ import { revalidatePath } from 'next/cache';
 import { apiRequest } from '@/lib/api';
 
 export async function criarPlantao(_: unknown, formData: FormData) {
-  const cep = (formData.get('cep') as string).replace(/\D/g, '');
-  const volumeRaw = formData.get('volumePacientes') as string;
-  const observacoes = formData.get('observacoes') as string;
+  // Raw values the user typed — echoed back on error so the form repopulates.
+  const values = {
+    tipo: (formData.get('tipo') as string) ?? '',
+    tipoPorta: (formData.get('tipoPorta') as string) ?? '',
+    duracao: (formData.get('duracao') as string) ?? '',
+    especialidade: (formData.get('especialidade') as string) ?? '',
+    valorProposto: (formData.get('valorProposto') as string) ?? '',
+    volumePacientes: (formData.get('volumePacientes') as string) ?? '',
+    cep: (formData.get('cep') as string) ?? '',
+    localizacao: (formData.get('localizacao') as string) ?? '',
+    observacoes: (formData.get('observacoes') as string) ?? '',
+    dataInicio: (formData.get('dataInicio') as string) ?? '',
+    dataFim: (formData.get('dataFim') as string) ?? '',
+  };
 
   const data = {
-    tipo: formData.get('tipo'),
-    tipoPorta: formData.get('tipoPorta'),
-    duracao: formData.get('duracao'),
-    especialidade: formData.get('especialidade'),
-    valorProposto: Number(formData.get('valorProposto')),
-    ...(volumeRaw ? { volumePacientes: Number(volumeRaw) } : {}),
-    cep,
-    localizacao: formData.get('localizacao'),
-    ...(observacoes ? { observacoes } : {}),
-    dataInicio: formData.get('dataInicio'),
-    dataFim: formData.get('dataFim'),
+    tipo: values.tipo,
+    tipoPorta: values.tipoPorta,
+    duracao: values.duracao,
+    especialidade: values.especialidade,
+    valorProposto: Number(values.valorProposto),
+    ...(values.volumePacientes ? { volumePacientes: Number(values.volumePacientes) } : {}),
+    cep: values.cep.replace(/\D/g, ''),
+    localizacao: values.localizacao,
+    ...(values.observacoes ? { observacoes: values.observacoes } : {}),
+    dataInicio: values.dataInicio,
+    dataFim: values.dataFim,
   };
 
   const res = await apiRequest('/plantoes', {
@@ -30,7 +41,7 @@ export async function criarPlantao(_: unknown, formData: FormData) {
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     const msg = Array.isArray(body.message) ? body.message[0] : body.message;
-    return { error: msg || 'Erro ao criar plantão.' };
+    return { error: msg || 'Erro ao criar plantão.', values };
   }
 
   redirect('/estabelecimento');

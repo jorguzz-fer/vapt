@@ -9,7 +9,8 @@
     "db:generate": "pnpm --filter @vapt/db run db:generate",
     "db:migrate": "pnpm --filter @vapt/db run db:migrate",
     "db:studio": "pnpm --filter @vapt/db run db:studio",
-    "db:push": "pnpm --filter @vapt/db run db:push"
+    "db:push": "pnpm --filter @vapt/db run db:push",
+    "db:seed": "pnpm --filter @vapt/db run db:seed"
   },
   "devDependencies": {
     "turbo": "latest",

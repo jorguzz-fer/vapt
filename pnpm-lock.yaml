@@ -143,9 +143,18 @@ importers:
       '@types/node':
         specifier: ^22.0.0
         version: 22.20.0
+      argon2:
+        specifier: ^0.44.0
+        version: 0.44.0
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.6.1
       drizzle-kit:
         specifier: latest
         version: 0.31.10
+      tsx:
+        specifier: ^4.19.2
+        version: 4.22.4
       typescript:
         specifier: ^5.8.3
         version: 5.9.3

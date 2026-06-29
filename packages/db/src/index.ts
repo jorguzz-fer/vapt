@@ -5,6 +5,7 @@ import * as schema from './schema';
 export * from './schema';
 export { schema };
 export type { PostgresJsDatabase };
+export { runSeed, SENHA_PADRAO } from './seed-data';
 
 export function createDb(databaseUrl: string): PostgresJsDatabase<typeof schema> {
   const client = postgres(databaseUrl);

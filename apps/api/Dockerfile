@@ -36,6 +36,8 @@ RUN addgroup --system --gid 1001 nodejs && \
 
 COPY --from=build --chown=nestjs:nodejs /app/apps/api/dist ./dist
 COPY --from=deploy --chown=nestjs:nodejs /deploy/api/node_modules ./node_modules
+# Migrations SQL — applied on boot by runDbBootstrap (migrationsFolder: ./drizzle)
+COPY --from=build --chown=nestjs:nodejs /app/packages/db/drizzle ./drizzle
 
 USER nestjs
 

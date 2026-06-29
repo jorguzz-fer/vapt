@@ -35,13 +35,14 @@ const labelClass = 'block text-sm font-medium text-zinc-700 mb-1';
 
 export default function NovoPlantaoForm() {
   const [state, action, pending] = useActionState(criarPlantao, undefined);
+  const v = state?.values;
 
   return (
     <form action={action} className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className={labelClass}>Tipo de plantão</label>
-          <select name="tipo" required className={inputClass}>
+          <select name="tipo" required className={inputClass} defaultValue={v?.tipo ?? ''}>
             <option value="">Selecione...</option>
             {TIPOS.map((t) => (
               <option key={t.value} value={t.value}>{t.label}</option>
@@ -51,7 +52,7 @@ export default function NovoPlantaoForm() {
 
         <div>
           <label className={labelClass}>Especialidade</label>
-          <select name="especialidade" required className={inputClass}>
+          <select name="especialidade" required className={inputClass} defaultValue={v?.especialidade ?? ''}>
             <option value="">Selecione...</option>
             {ESPECIALIDADES.map((e) => (
               <option key={e.value} value={e.value}>{e.label}</option>
@@ -61,7 +62,7 @@ export default function NovoPlantaoForm() {
 
         <div>
           <label className={labelClass}>Duração</label>
-          <select name="duracao" required className={inputClass}>
+          <select name="duracao" required className={inputClass} defaultValue={v?.duracao ?? ''}>
             <option value="">Selecione...</option>
             {DURACOES.map((d) => (
               <option key={d.value} value={d.value}>{d.label}</option>
@@ -71,7 +72,7 @@ export default function NovoPlantaoForm() {
 
         <div>
           <label className={labelClass}>Tipo de vaga</label>
-          <select name="tipoPorta" required className={inputClass}>
+          <select name="tipoPorta" required className={inputClass} defaultValue={v?.tipoPorta ?? ''}>
             <option value="">Selecione...</option>
             {PORTAS.map((p) => (
               <option key={p.value} value={p.value}>{p.label}</option>
@@ -91,6 +92,7 @@ export default function NovoPlantaoForm() {
             step="0.01"
             placeholder="Ex: 120.00"
             className={inputClass}
+            defaultValue={v?.valorProposto ?? ''}
           />
         </div>
 
@@ -105,6 +107,7 @@ export default function NovoPlantaoForm() {
             max="999"
             placeholder="Ex: 30"
             className={inputClass}
+            defaultValue={v?.volumePacientes ?? ''}
           />
         </div>
       </div>
@@ -117,6 +120,7 @@ export default function NovoPlantaoForm() {
             name="dataInicio"
             required
             className={inputClass}
+            defaultValue={v?.dataInicio ?? ''}
           />
         </div>
 
@@ -127,6 +131,7 @@ export default function NovoPlantaoForm() {
             name="dataFim"
             required
             className={inputClass}
+            defaultValue={v?.dataFim ?? ''}
           />
         </div>
       </div>
@@ -141,6 +146,7 @@ export default function NovoPlantaoForm() {
             maxLength={9}
             placeholder="00000-000"
             className={inputClass}
+            defaultValue={v?.cep ?? ''}
           />
         </div>
 
@@ -153,6 +159,7 @@ export default function NovoPlantaoForm() {
             minLength={10}
             placeholder="Rua, número, bairro, cidade"
             className={inputClass}
+            defaultValue={v?.localizacao ?? ''}
           />
         </div>
       </div>
@@ -167,6 +174,7 @@ export default function NovoPlantaoForm() {
           maxLength={1000}
           placeholder="Informações adicionais para o profissional..."
           className={`${inputClass} resize-none`}
+          defaultValue={v?.observacoes ?? ''}
         />
       </div>
 

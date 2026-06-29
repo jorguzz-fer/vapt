@@ -53,7 +53,9 @@ export async function registerProfissional(_: unknown, formData: FormData) {
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     const msg = Array.isArray(body.message) ? body.message[0] : body.message;
-    return { error: msg || 'Erro ao criar conta.' };
+    // Echo back non-sensitive fields so the form repopulates (never the password).
+    const { email, nomeCompleto, crmv } = data;
+    return { error: msg || 'Erro ao criar conta.', values: { email, nomeCompleto, crmv } };
   }
 
   const loginRes = await fetch(`${API_URL}/auth/login`, {
@@ -88,7 +90,12 @@ export async function registerEstabelecimento(_: unknown, formData: FormData) {
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));
     const msg = Array.isArray(body.message) ? body.message[0] : body.message;
-    return { error: msg || 'Erro ao criar conta.' };
+    // Echo back non-sensitive fields so the form repopulates (never the password).
+    const { email, razaoSocial, cnpj, cep, endereco } = data;
+    return {
+      error: msg || 'Erro ao criar conta.',
+      values: { email, razaoSocial, cnpj, cep, endereco },
+    };
   }
 
   const loginRes = await fetch(`${API_URL}/auth/login`, {

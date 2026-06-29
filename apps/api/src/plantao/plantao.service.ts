@@ -127,6 +127,39 @@ export class PlantaoService {
     return updated;
   }
 
+  async marcarNoShow(plantaoId: string, userId: string) {
+    const [estab] = await this.db
+      .select({ id: estabelecimentos.id })
+      .from(estabelecimentos)
+      .where(eq(estabelecimentos.userId, userId))
+      .limit(1);
+
+    if (!estab) throw new NotFoundException('Estabelecimento não encontrado.');
+
+    const [plantao] = await this.db
+      .select({ id: plantoes.id, status: plantoes.status })
+      .from(plantoes)
+      .where(and(eq(plantoes.id, plantaoId), eq(plantoes.estabelecimentoId, estab.id)))
+      .limit(1);
+
+    if (!plantao) throw new NotFoundException('Plantão não encontrado.');
+
+    // Só faz sentido quando um profissional já foi designado.
+    if (!['ACEITA', 'CONFIRMADA', 'EM_ANDAMENTO'].includes(plantao.status)) {
+      throw new BadRequestException(
+        'No-show só pode ser registrado em plantão com profissional designado.',
+      );
+    }
+
+    const [updated] = await this.db
+      .update(plantoes)
+      .set({ status: 'NO_SHOW', updatedAt: new Date() })
+      .where(eq(plantoes.id, plantaoId))
+      .returning();
+
+    return updated;
+  }
+
   async cancelar(plantaoId: string, userId: string, motivo?: string) {
     const [estab] = await this.db
       .select({ id: estabelecimentos.id })

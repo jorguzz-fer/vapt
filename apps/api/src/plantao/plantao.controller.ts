@@ -49,6 +49,12 @@ export class PlantaoController {
     return this.plantaoService.concluir(id, user.sub);
   }
 
+  @Patch(':id/no-show')
+  @Roles(UserRole.ESTABELECIMENTO)
+  marcarNoShow(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.plantaoService.marcarNoShow(id, user.sub);
+  }
+
   @Patch(':id/cancelar')
   @Roles(UserRole.ESTABELECIMENTO)
   cancelar(

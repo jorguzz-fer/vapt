@@ -5,6 +5,7 @@ import { apiRequest } from '@/lib/api';
 import GestaoButtons from './GestaoButtons';
 import ConcluirAvaliarForm from './ConcluirAvaliarForm';
 import CancelarPlantaoForm from './CancelarPlantaoForm';
+import NoShowForm from './NoShowForm';
 
 const STATUS_LABEL: Record<string, string> = {
   ABERTA: 'Aberta',
@@ -23,7 +24,9 @@ const STATUS_COLOR: Record<string, string> = {
   CONFIRMADA: 'bg-blue-100 text-blue-700',
   EM_ANDAMENTO: 'bg-yellow-100 text-yellow-700',
   CONCLUIDA: 'bg-zinc-100 text-zinc-600',
+  AVALIADA: 'bg-zinc-100 text-zinc-600',
   CANCELADA: 'bg-red-100 text-red-600',
+  NO_SHOW: 'bg-amber-100 text-amber-700',
 };
 
 const ESPECIALIDADE_LABEL: Record<string, string> = {
@@ -166,6 +169,11 @@ export default async function PlantaoDetailPage({ params }: { params: Promise<{ 
             status={plantao.status}
             jaAvaliou={jaAvaliou}
           />
+        </div>
+
+        {/* No-show */}
+        <div className="mb-4">
+          <NoShowForm plantaoId={plantao.id} status={plantao.status} />
         </div>
 
         {/* Cancelar */}

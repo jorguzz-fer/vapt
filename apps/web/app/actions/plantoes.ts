@@ -47,6 +47,23 @@ export async function criarPlantao(_: unknown, formData: FormData) {
   redirect('/estabelecimento');
 }
 
+export async function marcarNoShow(_: unknown, formData: FormData) {
+  const plantaoId = formData.get('plantaoId') as string;
+
+  const res = await apiRequest(`/plantoes/${plantaoId}/no-show`, {
+    method: 'PATCH',
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    const msg = Array.isArray(body.message) ? body.message[0] : body.message;
+    return { error: msg || 'Erro ao registrar no-show.' };
+  }
+
+  revalidatePath(`/estabelecimento/plantoes/${plantaoId}`);
+  revalidatePath('/estabelecimento');
+}
+
 export async function cancelarPlantao(_: unknown, formData: FormData) {
   const plantaoId = formData.get('plantaoId') as string;
   const motivo = formData.get('motivo') as string | null;

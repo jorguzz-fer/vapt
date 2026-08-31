@@ -11,6 +11,7 @@ import { AdminModule } from './admin/admin.module';
 import { AvaliacaoModule } from './avaliacao/avaliacao.module';
 import { PerfilModule } from './perfil/perfil.module';
 import { ConfiguracaoModule } from './configuracao/configuracao.module';
+import { AsaasModule } from './asaas/asaas.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 
@@ -27,6 +28,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
     AvaliacaoModule,
     PerfilModule,
     ConfiguracaoModule,
+    AsaasModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },

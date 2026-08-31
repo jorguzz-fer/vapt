@@ -1,4 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
+  "compilerOptions": {
+    // Só o type-check precisa das flags de teste; o build emite JS de verdade.
+    "allowImportingTsExtensions": false,
+    "emitDeclarationOnly": false
+  },
+  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts"]
 }

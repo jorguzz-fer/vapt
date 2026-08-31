@@ -27,7 +27,7 @@ export default function CancelarPlantaoForm({ plantaoId, status }: Props) {
     return (
       <button
         onClick={() => setConfirmar(true)}
-        className="text-sm text-red-600 hover:text-red-800 underline underline-offset-2"
+        className="text-sm text-danger hover:opacity-80 underline underline-offset-2"
       >
         Cancelar plantão
       </button>
@@ -35,37 +35,37 @@ export default function CancelarPlantaoForm({ plantaoId, status }: Props) {
   }
 
   return (
-    <div className="border rounded-xl p-5 bg-white border-red-200">
-      <h3 className="font-semibold text-zinc-900 mb-3">Confirmar cancelamento</h3>
+    <div className="card p-5 border-red-200">
+      <h3 className="font-semibold text-ink mb-3">Confirmar cancelamento</h3>
       <form action={action} className="space-y-3">
         <input type="hidden" name="plantaoId" value={plantaoId} />
         <div>
-          <label className="block text-sm text-zinc-600 mb-1">
-            Motivo <span className="text-zinc-400">(opcional)</span>
+          <label className="field-label">
+            Motivo <span className="text-muted font-normal">(opcional)</span>
           </label>
           <textarea
             name="motivo"
             rows={2}
             maxLength={500}
             placeholder="Ex: profissional próprio disponível"
-            className="w-full border border-zinc-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-400 resize-none"
+            className="field-input resize-none"
           />
         </div>
         {state?.error && (
-          <p className="text-xs text-red-600">{state.error}</p>
+          <p className="text-xs text-danger">{state.error}</p>
         )}
         <div className="flex gap-2">
           <button
             type="submit"
             disabled={pending}
-            className="px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition-colors disabled:opacity-60"
+            className="btn btn-danger"
           >
             {pending ? 'Cancelando...' : 'Confirmar cancelamento'}
           </button>
           <button
             type="button"
             onClick={() => setConfirmar(false)}
-            className="px-4 py-2 text-sm text-zinc-600 hover:text-zinc-900"
+            className="btn btn-ghost"
           >
             Voltar
           </button>

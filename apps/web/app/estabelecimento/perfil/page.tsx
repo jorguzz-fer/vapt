@@ -29,10 +29,10 @@ export default async function PerfilEstabelecimentoPage() {
   if (!perfil) redirect('/estabelecimento');
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-surface-2">
       <div className="max-w-2xl mx-auto p-6">
         <div className="mb-6">
-          <Link href="/estabelecimento" className="text-sm text-zinc-500 hover:text-zinc-900">
+          <Link href="/estabelecimento" className="text-sm text-muted hover:text-ink">
             ← Dashboard
           </Link>
         </div>
@@ -40,28 +40,28 @@ export default async function PerfilEstabelecimentoPage() {
         <h1 className="text-2xl font-bold mb-6">Perfil do estabelecimento</h1>
 
         {/* Info fixa */}
-        <div className="border rounded-xl p-6 bg-white mb-6">
-          <p className="text-xl font-semibold text-zinc-900">
+        <div className="card p-6 mb-6">
+          <p className="text-xl font-semibold text-ink">
             {perfil.nomeFantasia ?? perfil.razaoSocial}
           </p>
           {perfil.nomeFantasia && (
-            <p className="text-sm text-zinc-500 mt-0.5">{perfil.razaoSocial}</p>
+            <p className="text-sm text-muted mt-0.5">{perfil.razaoSocial}</p>
           )}
-          <p className="text-sm text-zinc-500 mt-1">{perfil.email}</p>
-          <div className="grid grid-cols-2 gap-3 text-sm text-zinc-600 mt-4">
+          <p className="text-sm text-muted mt-1">{perfil.email}</p>
+          <div className="grid grid-cols-2 gap-3 text-sm text-muted mt-4">
             <div>
-              <span className="text-xs text-zinc-400 block">CNPJ</span>
+              <span className="text-xs text-muted block">CNPJ</span>
               {perfil.cnpj}
             </div>
             <div>
-              <span className="text-xs text-zinc-400 block">CEP</span>
+              <span className="text-xs text-muted block">CEP</span>
               {perfil.cep}
             </div>
           </div>
         </div>
 
         {/* Campos editáveis */}
-        <div className="border rounded-xl p-6 bg-white">
+        <div className="card p-6">
           <h2 className="text-lg font-semibold mb-4">Editar perfil</h2>
           <EditPerfilEstabelecimentoForm
             nomeFantasia={perfil.nomeFantasia}

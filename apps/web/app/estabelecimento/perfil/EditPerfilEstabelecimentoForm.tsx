@@ -22,7 +22,7 @@ export default function EditPerfilEstabelecimentoForm({ nomeFantasia, telefone, 
   return (
     <form action={action} className="space-y-4">
       <div>
-        <label htmlFor="nomeFantasia" className="block text-sm font-medium mb-1">
+        <label htmlFor="nomeFantasia" className="field-label">
           Nome fantasia
         </label>
         <input
@@ -32,11 +32,11 @@ export default function EditPerfilEstabelecimentoForm({ nomeFantasia, telefone, 
           maxLength={255}
           defaultValue={nomeFantasia ?? ''}
           placeholder="Ex: Clínica VetLife"
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
+          className="field-input"
         />
       </div>
       <div>
-        <label htmlFor="telefone" className="block text-sm font-medium mb-1">
+        <label htmlFor="telefone" className="field-label">
           Telefone / WhatsApp
         </label>
         <input
@@ -46,11 +46,11 @@ export default function EditPerfilEstabelecimentoForm({ nomeFantasia, telefone, 
           maxLength={20}
           defaultValue={telefone ?? ''}
           placeholder="(11) 99999-9999"
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
+          className="field-input"
         />
       </div>
       <div>
-        <label htmlFor="endereco" className="block text-sm font-medium mb-1">
+        <label htmlFor="endereco" className="field-label">
           Endereço completo
         </label>
         <input
@@ -59,16 +59,16 @@ export default function EditPerfilEstabelecimentoForm({ nomeFantasia, telefone, 
           type="text"
           maxLength={500}
           defaultValue={endereco}
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
+          className="field-input"
         />
       </div>
       {state?.error && (
-        <p className="text-sm text-red-600">{state.error}</p>
+        <p className="text-sm text-danger">{state.error}</p>
       )}
       <button
         type="submit"
         disabled={pending}
-        className="px-6 py-2 bg-zinc-900 text-white text-sm rounded-lg hover:bg-zinc-700 transition-colors disabled:opacity-60"
+        className="btn btn-primary"
       >
         {pending ? 'Salvando...' : 'Salvar perfil'}
       </button>

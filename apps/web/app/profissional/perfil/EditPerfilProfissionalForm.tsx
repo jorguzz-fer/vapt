@@ -29,14 +29,14 @@ export default function EditPerfilProfissionalForm({ especialidade, bio }: Props
   return (
     <form action={action} className="space-y-4">
       <div>
-        <label htmlFor="especialidade" className="block text-sm font-medium mb-1">
+        <label htmlFor="especialidade" className="field-label">
           Especialidade
         </label>
         <select
           id="especialidade"
           name="especialidade"
           defaultValue={especialidade ?? ''}
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900 bg-white"
+          className="field-input"
         >
           <option value="">Selecione...</option>
           {ESPECIALIDADE_OPTIONS.map((o) => (
@@ -45,8 +45,8 @@ export default function EditPerfilProfissionalForm({ especialidade, bio }: Props
         </select>
       </div>
       <div>
-        <label htmlFor="bio" className="block text-sm font-medium mb-1">
-          Bio <span className="text-zinc-400 font-normal">(até 500 caracteres)</span>
+        <label htmlFor="bio" className="field-label">
+          Bio <span className="text-muted font-normal">(até 500 caracteres)</span>
         </label>
         <textarea
           id="bio"
@@ -55,16 +55,16 @@ export default function EditPerfilProfissionalForm({ especialidade, bio }: Props
           maxLength={500}
           defaultValue={bio ?? ''}
           placeholder="Descreva sua experiência, especialidades e diferenciais..."
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900 resize-none"
+          className="field-input resize-none"
         />
       </div>
       {state?.error && (
-        <p className="text-sm text-red-600">{state.error}</p>
+        <p className="text-sm text-danger">{state.error}</p>
       )}
       <button
         type="submit"
         disabled={pending}
-        className="px-6 py-2 bg-zinc-900 text-white text-sm rounded-lg hover:bg-zinc-700 transition-colors disabled:opacity-60"
+        className="btn btn-primary"
       >
         {pending ? 'Salvando...' : 'Salvar perfil'}
       </button>

@@ -24,7 +24,7 @@ export default function GestaoButtons({
         ? 'bg-green-100 text-green-700'
         : statusCandidatura === 'REJEITADA'
           ? 'bg-red-100 text-red-600'
-          : 'bg-zinc-100 text-zinc-600';
+          : 'bg-surface-2 text-muted';
     const label =
       statusCandidatura === 'ACEITA'
         ? 'Aceita'
@@ -42,7 +42,7 @@ export default function GestaoButtons({
 
   return (
     <div className="flex flex-col items-end gap-1">
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <p className="text-xs text-danger">{error}</p>}
       <div className="flex gap-2">
         <form action={rejectAction}>
           <input type="hidden" name="candidaturaId" value={candidaturaId} />
@@ -50,7 +50,7 @@ export default function GestaoButtons({
           <button
             type="submit"
             disabled={rejectPending || acceptPending}
-            className="text-xs px-3 py-1.5 border border-red-200 text-red-600 rounded-full hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn btn-outline"
           >
             {rejectPending ? 'Rejeitando...' : 'Rejeitar'}
           </button>
@@ -61,7 +61,7 @@ export default function GestaoButtons({
           <button
             type="submit"
             disabled={acceptPending || rejectPending}
-            className="text-xs px-3 py-1.5 bg-zinc-900 text-white rounded-full hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn btn-primary"
           >
             {acceptPending ? 'Aceitando...' : 'Aceitar'}
           </button>

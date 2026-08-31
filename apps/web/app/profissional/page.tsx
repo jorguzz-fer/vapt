@@ -36,7 +36,7 @@ const PLANTAO_STATUS_COLOR: Record<string, string> = {
   ACEITA: 'bg-blue-100 text-blue-700',
   CONFIRMADA: 'bg-blue-100 text-blue-700',
   EM_ANDAMENTO: 'bg-yellow-100 text-yellow-700',
-  CONCLUIDA: 'bg-zinc-100 text-zinc-600',
+  CONCLUIDA: 'bg-surface-2 text-muted',
   AVALIADA: 'bg-green-100 text-green-700',
 };
 
@@ -136,15 +136,15 @@ export default async function ProfissionalDashboard() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-border px-6 py-4 flex items-center justify-between">
         <span className="font-bold text-lg">VAPT</span>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-zinc-500">{session.email}</span>
-          <a href="/profissional/perfil" className="text-sm text-zinc-600 hover:text-zinc-900">
+          <span className="text-sm text-muted">{session.email}</span>
+          <a href="/profissional/perfil" className="text-sm text-muted hover:text-ink">
             Perfil
           </a>
           <form action={logout}>
-            <button type="submit" className="text-sm text-zinc-600 hover:text-zinc-900">
+            <button type="submit" className="text-sm text-muted hover:text-ink">
               Sair
             </button>
           </form>
@@ -159,19 +159,19 @@ export default async function ProfissionalDashboard() {
             <h2 className="text-xl font-bold mb-4">Plantões para avaliar</h2>
             <div className="space-y-3">
               {candidaturasComPlantao.map((c) => (
-                <div key={c.id} className="border rounded-xl p-5 bg-white">
+                <div key={c.id} className="card p-5">
                   <div className="flex items-start justify-between gap-4 mb-2">
                     <div>
-                      <p className="font-medium text-zinc-900">{c.plantaoLocalizacao ?? '—'}</p>
+                      <p className="font-medium text-ink">{c.plantaoLocalizacao ?? '—'}</p>
                       {c.plantaoDataInicio && (
-                        <p className="text-xs text-zinc-500 mt-0.5">
+                        <p className="text-xs text-muted mt-0.5">
                           {formatDate(c.plantaoDataInicio)}
                         </p>
                       )}
                     </div>
                     {c.plantaoStatus && (
                       <span
-                        className={`text-xs font-medium px-2 py-0.5 rounded-full ${PLANTAO_STATUS_COLOR[c.plantaoStatus] ?? 'bg-zinc-100 text-zinc-600'}`}
+                        className={`text-xs font-medium px-2 py-0.5 rounded-full ${PLANTAO_STATUS_COLOR[c.plantaoStatus] ?? 'bg-surface-2 text-muted'}`}
                       >
                         {PLANTAO_STATUS_LABEL[c.plantaoStatus] ?? c.plantaoStatus}
                       </span>
@@ -183,7 +183,7 @@ export default async function ProfissionalDashboard() {
                       jaAvaliou={jaAvaliouMap[c.plantaoId] ?? false}
                     />
                   ) : (
-                    <p className="text-xs text-green-600 mt-1">Plantão avaliado por ambas as partes.</p>
+                    <p className="text-xs text-success mt-1">Plantão avaliado por ambas as partes.</p>
                   )}
                 </div>
               ))}
@@ -194,33 +194,33 @@ export default async function ProfissionalDashboard() {
         <section>
           <h2 className="text-xl font-bold mb-4">Plantões disponíveis</h2>
           {plantoes.length === 0 ? (
-            <div className="border rounded-xl p-6 text-zinc-500 text-sm">
+            <div className="card p-6 text-muted text-sm">
               Nenhum plantão aberto no momento. Aguarde novas oportunidades.
             </div>
           ) : (
             <div className="space-y-3">
               {plantoes.map((p) => (
-                <div key={p.id} className="border rounded-xl p-5 bg-white hover:border-zinc-300 transition-colors">
+                <div key={p.id} className="card p-5 hover:border-primary transition-colors">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
-                        <span className="text-xs font-medium bg-zinc-100 text-zinc-700 px-2 py-0.5 rounded-full">
+                        <span className="text-xs font-medium bg-surface-2 text-muted px-2 py-0.5 rounded-full">
                           {TIPO_LABEL[p.tipo] ?? p.tipo}
                         </span>
-                        <span className="text-xs text-zinc-500">
+                        <span className="text-xs text-muted">
                           {ESPECIALIDADE_LABEL[p.especialidade] ?? p.especialidade}
                         </span>
                         {p.tipoPorta === 'ABERTA' && (
-                          <span className="text-xs text-zinc-400">Vaga aberta</span>
+                          <span className="text-xs text-muted">Vaga aberta</span>
                         )}
                       </div>
-                      <p className="text-sm font-medium text-zinc-900 truncate">{p.localizacao}</p>
-                      <p className="text-xs text-zinc-500 mt-1">
+                      <p className="text-sm font-medium text-ink truncate">{p.localizacao}</p>
+                      <p className="text-xs text-muted mt-1">
                         {formatDate(p.dataInicio)} → {formatDate(p.dataFim)}
                       </p>
                     </div>
                     <div className="flex flex-col items-end gap-2 shrink-0">
-                      <p className="text-sm font-semibold text-zinc-900">
+                      <p className="text-sm font-semibold text-ink">
                         R$ {Number(p.valorProposto).toFixed(2)}/h
                       </p>
                       <CandidaturaButton
@@ -240,17 +240,17 @@ export default async function ProfissionalDashboard() {
             <h2 className="text-xl font-bold mb-4">Minhas candidaturas</h2>
             <div className="space-y-2">
               {candidaturasAtivas.map((c) => (
-                <div key={c.id} className="border rounded-xl px-5 py-3 bg-white flex items-center justify-between">
+                <div key={c.id} className="card px-5 py-3 flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-zinc-800">
+                    <p className="text-sm font-medium text-ink">
                       {c.plantaoLocalizacao ?? 'Plantão'}
                     </p>
-                    <p className="text-xs text-zinc-400 mt-0.5">
+                    <p className="text-xs text-muted mt-0.5">
                       Enviada em {new Date(c.createdAt).toLocaleDateString('pt-BR')}
                     </p>
                   </div>
                   <span
-                    className={`text-xs font-medium px-2 py-0.5 rounded-full ${CANDIDATURA_COLOR[c.status] ?? 'bg-zinc-100 text-zinc-600'}`}
+                    className={`text-xs font-medium px-2 py-0.5 rounded-full ${CANDIDATURA_COLOR[c.status] ?? 'bg-surface-2 text-muted'}`}
                   >
                     {CANDIDATURA_LABEL[c.status] ?? c.status}
                   </span>

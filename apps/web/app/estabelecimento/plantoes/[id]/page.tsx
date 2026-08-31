@@ -23,8 +23,8 @@ const STATUS_COLOR: Record<string, string> = {
   ACEITA: 'bg-blue-100 text-blue-700',
   CONFIRMADA: 'bg-blue-100 text-blue-700',
   EM_ANDAMENTO: 'bg-yellow-100 text-yellow-700',
-  CONCLUIDA: 'bg-zinc-100 text-zinc-600',
-  AVALIADA: 'bg-zinc-100 text-zinc-600',
+  CONCLUIDA: 'bg-surface-2 text-muted',
+  AVALIADA: 'bg-surface-2 text-muted',
   CANCELADA: 'bg-red-100 text-red-600',
   NO_SHOW: 'bg-amber-100 text-amber-700',
 };
@@ -108,55 +108,55 @@ export default async function PlantaoDetailPage({ params }: { params: Promise<{ 
   if (!plantao) redirect('/estabelecimento');
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-surface-2">
       <div className="max-w-3xl mx-auto p-6">
         <div className="mb-6">
-          <Link href="/estabelecimento" className="text-sm text-zinc-500 hover:text-zinc-900">
+          <Link href="/estabelecimento" className="text-sm text-muted hover:text-ink">
             ← Meus plantões
           </Link>
         </div>
 
         {/* Detalhes do plantão */}
-        <div className="bg-white border rounded-xl p-6 mb-6">
+        <div className="card p-6 mb-6">
           <div className="flex items-start justify-between gap-4 mb-4">
             <div>
               <span
-                className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_COLOR[plantao.status] ?? 'bg-zinc-100 text-zinc-600'}`}
+                className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_COLOR[plantao.status] ?? 'bg-surface-2 text-muted'}`}
               >
                 {STATUS_LABEL[plantao.status] ?? plantao.status}
               </span>
               <h1 className="text-xl font-bold mt-2">{plantao.localizacao}</h1>
-              <p className="text-sm text-zinc-500 mt-1">
+              <p className="text-sm text-muted mt-1">
                 {ESPECIALIDADE_LABEL[plantao.especialidade] ?? plantao.especialidade}
               </p>
             </div>
             <div className="text-right shrink-0">
-              <p className="text-lg font-bold text-zinc-900">
+              <p className="text-lg font-bold text-ink">
                 R$ {Number(plantao.valorProposto).toFixed(2)}/h
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 text-sm text-zinc-600">
+          <div className="grid grid-cols-2 gap-3 text-sm text-muted">
             <div>
-              <span className="text-xs text-zinc-400 block">Início</span>
+              <span className="text-xs text-muted block">Início</span>
               {formatDate(plantao.dataInicio)}
             </div>
             <div>
-              <span className="text-xs text-zinc-400 block">Fim</span>
+              <span className="text-xs text-muted block">Fim</span>
               {formatDate(plantao.dataFim)}
             </div>
             <div>
-              <span className="text-xs text-zinc-400 block">CEP</span>
+              <span className="text-xs text-muted block">CEP</span>
               {plantao.cep}
             </div>
             <div>
-              <span className="text-xs text-zinc-400 block">Tipo de vaga</span>
+              <span className="text-xs text-muted block">Tipo de vaga</span>
               {plantao.tipoPorta === 'ABERTA' ? 'Aberta' : 'Fechada'}
             </div>
           </div>
           {plantao.observacoes && (
-            <div className="mt-4 pt-4 border-t text-sm text-zinc-600">
-              <span className="text-xs text-zinc-400 block mb-1">Observações</span>
+            <div className="mt-4 pt-4 border-t border-border text-sm text-muted">
+              <span className="text-xs text-muted block mb-1">Observações</span>
               {plantao.observacoes}
             </div>
           )}
@@ -185,33 +185,33 @@ export default async function PlantaoDetailPage({ params }: { params: Promise<{ 
         <section>
           <h2 className="text-lg font-bold mb-3">
             Candidaturas{' '}
-            <span className="text-zinc-400 font-normal text-base">({candidaturas.length})</span>
+            <span className="text-muted font-normal text-base">({candidaturas.length})</span>
           </h2>
 
           {candidaturas.length === 0 ? (
-            <div className="border rounded-xl p-6 text-zinc-500 text-sm bg-white">
+            <div className="card p-6 text-muted text-sm">
               Nenhuma candidatura recebida ainda.
             </div>
           ) : (
             <div className="space-y-3">
               {candidaturas.map((c) => (
-                <div key={c.id} className="border rounded-xl p-5 bg-white">
+                <div key={c.id} className="card p-5">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-zinc-900">{c.nomeCompleto}</p>
-                      <p className="text-xs text-zinc-500 mt-0.5">CRMV: {c.crmv}</p>
+                      <p className="font-medium text-ink">{c.nomeCompleto}</p>
+                      <p className="text-xs text-muted mt-0.5">CRMV: {c.crmv}</p>
                       {c.especialidade && (
-                        <p className="text-xs text-zinc-400 mt-0.5">
+                        <p className="text-xs text-muted mt-0.5">
                           {ESPECIALIDADE_LABEL[c.especialidade] ?? c.especialidade}
                         </p>
                       )}
                       {c.bio && (
-                        <p className="text-sm text-zinc-600 mt-2 line-clamp-2">{c.bio}</p>
+                        <p className="text-sm text-muted mt-2 line-clamp-2">{c.bio}</p>
                       )}
                       {c.mensagem && (
-                        <p className="text-sm text-zinc-600 mt-2 italic">&ldquo;{c.mensagem}&rdquo;</p>
+                        <p className="text-sm text-muted mt-2 italic">&ldquo;{c.mensagem}&rdquo;</p>
                       )}
-                      <p className="text-xs text-zinc-400 mt-2">
+                      <p className="text-xs text-muted mt-2">
                         Candidatou em {new Date(c.createdAt).toLocaleDateString('pt-BR')}
                       </p>
                     </div>

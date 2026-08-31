@@ -29,9 +29,8 @@ const ESPECIALIDADES = [
   { value: 'GERAL', label: 'Geral' },
 ];
 
-const inputClass =
-  'w-full border border-zinc-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 bg-white';
-const labelClass = 'block text-sm font-medium text-zinc-700 mb-1';
+const inputClass = 'field-input';
+const labelClass = 'field-label';
 
 export default function NovoPlantaoForm() {
   const [state, action, pending] = useActionState(criarPlantao, undefined);
@@ -98,7 +97,7 @@ export default function NovoPlantaoForm() {
 
         <div>
           <label className={labelClass}>
-            Volume de pacientes <span className="text-zinc-400 font-normal">(opcional)</span>
+            Volume de pacientes <span className="text-muted font-normal">(opcional)</span>
           </label>
           <input
             type="number"
@@ -166,7 +165,7 @@ export default function NovoPlantaoForm() {
 
       <div>
         <label className={labelClass}>
-          Observações <span className="text-zinc-400 font-normal">(opcional)</span>
+          Observações <span className="text-muted font-normal">(opcional)</span>
         </label>
         <textarea
           name="observacoes"
@@ -179,7 +178,7 @@ export default function NovoPlantaoForm() {
       </div>
 
       {state?.error && (
-        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+        <p className="text-sm text-danger bg-red-50 border border-red-200 rounded-lg px-3 py-2">
           {state.error}
         </p>
       )}
@@ -187,14 +186,14 @@ export default function NovoPlantaoForm() {
       <div className="flex gap-3 pt-2">
         <a
           href="/estabelecimento"
-          className="flex-1 text-center px-4 py-2 border border-zinc-200 rounded-lg text-sm text-zinc-600 hover:bg-zinc-50 transition-colors"
+          className="btn btn-outline flex-1"
         >
           Cancelar
         </a>
         <button
           type="submit"
           disabled={pending}
-          className="flex-1 px-4 py-2 bg-zinc-900 text-white text-sm rounded-lg hover:bg-zinc-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+          className="btn btn-primary flex-1"
         >
           {pending ? 'Publicando...' : 'Publicar plantão'}
         </button>

@@ -53,12 +53,12 @@ export default async function AdminPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-border px-6 py-4 flex items-center justify-between">
         <span className="font-bold text-lg">VAPT Admin</span>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-zinc-500">{session.email}</span>
+          <span className="text-sm text-muted">{session.email}</span>
           <form action={logout}>
-            <button type="submit" className="text-sm text-zinc-600 hover:text-zinc-900">
+            <button type="submit" className="text-sm text-muted hover:text-ink">
               Sair
             </button>
           </form>
@@ -85,20 +85,20 @@ export default async function AdminPage() {
         <section>
           <h2 className="text-xl font-bold mb-4">
             Profissionais{' '}
-            <span className="font-normal text-zinc-400 text-base">({profissionais.length})</span>
+            <span className="font-normal text-muted text-base">({profissionais.length})</span>
           </h2>
           {profissionais.length === 0 ? (
-            <div className="border rounded-xl p-6 text-zinc-500 text-sm bg-white">
+            <div className="card p-6 text-muted text-sm">
               Nenhum profissional cadastrado.
             </div>
           ) : (
             <div className="space-y-3">
               {profissionais.map((p) => (
-                <div key={p.id} className="border rounded-xl p-5 bg-white">
+                <div key={p.id} className="card p-5">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <p className="font-medium text-zinc-900">{p.nomeCompleto}</p>
+                        <p className="font-medium text-ink">{p.nomeCompleto}</p>
                         {p.verificado ? (
                           <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
                             Verificado
@@ -114,14 +114,14 @@ export default async function AdminPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-zinc-500">CRMV: {p.crmv}</p>
+                      <p className="text-xs text-muted">CRMV: {p.crmv}</p>
                       {p.especialidade && (
-                        <p className="text-xs text-zinc-400 mt-0.5">
+                        <p className="text-xs text-muted mt-0.5">
                           {ESPECIALIDADE_LABEL[p.especialidade] ?? p.especialidade}
                         </p>
                       )}
-                      <p className="text-xs text-zinc-400 mt-1">{p.email}</p>
-                      <p className="text-xs text-zinc-300 mt-0.5">
+                      <p className="text-xs text-muted mt-1">{p.email}</p>
+                      <p className="text-xs text-muted mt-0.5">
                         Cadastrado em {new Date(p.createdAt).toLocaleDateString('pt-BR')}
                       </p>
                     </div>
@@ -141,15 +141,15 @@ export default async function AdminPage() {
 function StatCard({
   label,
   value,
-  color = 'text-zinc-900',
+  color = 'text-ink',
 }: {
   label: string;
   value: number;
   color?: string;
 }) {
   return (
-    <div className="border rounded-xl p-4 bg-white">
-      <p className="text-xs text-zinc-500 mb-1">{label}</p>
+    <div className="card p-4">
+      <p className="text-xs text-muted mb-1">{label}</p>
       <p className={`text-2xl font-bold ${color}`}>{value}</p>
     </div>
   );

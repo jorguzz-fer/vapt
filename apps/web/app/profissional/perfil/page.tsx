@@ -30,10 +30,10 @@ export default async function PerfilProfissionalPage() {
   if (!perfil) redirect('/profissional');
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-surface-2">
       <div className="max-w-2xl mx-auto p-6">
         <div className="mb-6">
-          <Link href="/profissional" className="text-sm text-zinc-500 hover:text-zinc-900">
+          <Link href="/profissional" className="text-sm text-muted hover:text-ink">
             ← Dashboard
           </Link>
         </div>
@@ -41,11 +41,11 @@ export default async function PerfilProfissionalPage() {
         <h1 className="text-2xl font-bold mb-6">Meu perfil</h1>
 
         {/* Info fixa */}
-        <div className="border rounded-xl p-6 bg-white mb-6">
+        <div className="card p-6 mb-6">
           <div className="flex items-start justify-between gap-4 mb-4">
             <div>
-              <p className="text-xl font-semibold text-zinc-900">{perfil.nomeCompleto}</p>
-              <p className="text-sm text-zinc-500 mt-0.5">{perfil.email}</p>
+              <p className="text-xl font-semibold text-ink">{perfil.nomeCompleto}</p>
+              <p className="text-sm text-muted mt-0.5">{perfil.email}</p>
             </div>
             <div className="flex flex-col items-end gap-1">
               {perfil.verificado ? (
@@ -58,20 +58,20 @@ export default async function PerfilProfissionalPage() {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 text-sm text-zinc-600">
+          <div className="grid grid-cols-2 gap-3 text-sm text-muted">
             <div>
-              <span className="text-xs text-zinc-400 block">CRMV</span>
+              <span className="text-xs text-muted block">CRMV</span>
               {perfil.crmv}
             </div>
             <div>
-              <span className="text-xs text-zinc-400 block">Status CRMV</span>
+              <span className="text-xs text-muted block">Status CRMV</span>
               {perfil.crmvAtivo ? 'Ativo' : 'Inativo'}
             </div>
           </div>
         </div>
 
         {/* Campos editáveis */}
-        <div className="border rounded-xl p-6 bg-white">
+        <div className="card p-6">
           <h2 className="text-lg font-semibold mb-4">Editar perfil</h2>
           <EditPerfilProfissionalForm
             especialidade={perfil.especialidade}

@@ -22,12 +22,12 @@ export default function CandidaturaButton({ plantaoId, jaCandidatou }: Props) {
     <form action={action}>
       <input type="hidden" name="plantaoId" value={plantaoId} />
       {state?.error && (
-        <p className="text-xs text-red-600 mb-1">{state.error}</p>
+        <p className="text-xs text-danger mb-1">{state.error}</p>
       )}
       <button
         type="submit"
         disabled={pending}
-        className="text-xs font-medium px-3 py-1.5 bg-zinc-900 text-white rounded-full hover:bg-zinc-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+        className="btn btn-primary"
       >
         {pending ? 'Enviando...' : 'Candidatar'}
       </button>

@@ -7,9 +7,11 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "lint": "tsc --noEmit",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test \"src/**/*.test.ts\""
   },
   "devDependencies": {
+    "@types/node": "^20.19.43",
     "typescript": "^5.8.3"
   }
 }

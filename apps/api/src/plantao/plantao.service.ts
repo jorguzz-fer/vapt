@@ -7,14 +7,19 @@ import {
 import { and, desc, eq } from 'drizzle-orm';
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import { candidaturas, plantoes, profissionais, estabelecimentos, schema } from '@vapt/db';
+import { formatarBRL, reaisParaCentavos } from '@vapt/shared';
 import { DB } from '../database/database.module';
+import { ConfiguracaoService } from '../configuracao/configuracao.service';
 import { CreatePlantaoDto } from './dto/create-plantao.dto';
 
 type DrizzleDB = PostgresJsDatabase<typeof schema>;
 
 @Injectable()
 export class PlantaoService {
-  constructor(@Inject(DB) private readonly db: DrizzleDB) {}
+  constructor(
+    @Inject(DB) private readonly db: DrizzleDB,
+    private readonly configuracaoService: ConfiguracaoService,
+  ) {}
 
   async create(dto: CreatePlantaoDto, userId: string) {
     const [estab] = await this.db
@@ -30,6 +35,15 @@ export class PlantaoService {
     if (fim <= inicio) {
       throw new BadRequestException(
         'Data fim deve ser posterior à data início.',
+      );
+    }
+
+    // Régua de preço mínimo: o piso é configurado pelo admin.
+    const { valorMinimoPlantao } = await this.configuracaoService.get();
+    const minimo = reaisParaCentavos(valorMinimoPlantao);
+    if (minimo > 0 && reaisParaCentavos(dto.valorProposto) < minimo) {
+      throw new BadRequestException(
+        `Valor abaixo do mínimo permitido (${formatarBRL(minimo)}).`,
       );
     }
 

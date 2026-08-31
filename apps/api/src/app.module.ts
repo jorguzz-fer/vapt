@@ -10,6 +10,7 @@ import { CandidaturaModule } from './candidatura/candidatura.module';
 import { AdminModule } from './admin/admin.module';
 import { AvaliacaoModule } from './avaliacao/avaliacao.module';
 import { PerfilModule } from './perfil/perfil.module';
+import { ConfiguracaoModule } from './configuracao/configuracao.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 
@@ -25,6 +26,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
     AdminModule,
     AvaliacaoModule,
     PerfilModule,
+    ConfiguracaoModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },

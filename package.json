@@ -6,6 +6,7 @@
     "build": "turbo build",
     "lint": "turbo lint",
     "check-types": "turbo check-types",
+    "test": "turbo test",
     "db:generate": "pnpm --filter @vapt/db run db:generate",
     "db:migrate": "pnpm --filter @vapt/db run db:migrate",
     "db:studio": "pnpm --filter @vapt/db run db:studio",

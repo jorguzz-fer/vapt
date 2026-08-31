@@ -5,3 +5,4 @@ export * from './plantoes';
 export * from './candidaturas';
 export * from './avaliacoes';
 export * from './pagamentos';
+export * from './configuracoes';

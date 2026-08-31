@@ -23,6 +23,9 @@ export const profissionais = pgTable('profissionais', {
   fotoPerfil: varchar('foto_perfil', { length: 500 }),
   // Optional PJ/CNPJ — sensitive fiscal data
   cnpj: varchar('cnpj', { length: 14 }),
+  /** Subconta Asaas que recebe o repasse via split (null = não onboardado). */
+  asaasWalletId: varchar('asaas_wallet_id', { length: 255 }),
+  asaasAccountId: varchar('asaas_account_id', { length: 255 }),
   verificado: boolean('verificado').default(false).notNull(),
   backgroundCheckAprovado: boolean('background_check_aprovado').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),

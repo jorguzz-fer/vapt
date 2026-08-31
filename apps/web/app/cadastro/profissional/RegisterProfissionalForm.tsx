@@ -10,7 +10,7 @@ export function RegisterProfissionalForm() {
   return (
     <form action={action} className="space-y-4">
       <div>
-        <label htmlFor="nomeCompleto" className="block text-sm font-medium mb-1">
+        <label htmlFor="nomeCompleto" className="field-label">
           Nome completo
         </label>
         <input
@@ -20,11 +20,11 @@ export function RegisterProfissionalForm() {
           required
           autoComplete="name"
           defaultValue={v?.nomeCompleto ?? ''}
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
+          className="field-input"
         />
       </div>
       <div>
-        <label htmlFor="crmv" className="block text-sm font-medium mb-1">
+        <label htmlFor="crmv" className="field-label">
           CRMV
         </label>
         <input
@@ -34,11 +34,11 @@ export function RegisterProfissionalForm() {
           required
           placeholder="Ex: SP-12345"
           defaultValue={v?.crmv ?? ''}
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
+          className="field-input"
         />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1">
+        <label htmlFor="email" className="field-label">
           Email
         </label>
         <input
@@ -48,11 +48,11 @@ export function RegisterProfissionalForm() {
           required
           autoComplete="email"
           defaultValue={v?.email ?? ''}
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
+          className="field-input"
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium mb-1">
+        <label htmlFor="password" className="field-label">
           Senha
         </label>
         <input
@@ -62,20 +62,16 @@ export function RegisterProfissionalForm() {
           required
           minLength={8}
           autoComplete="new-password"
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
+          className="field-input"
         />
       </div>
       {state?.error && (
-        <p className="text-red-600 text-sm">{state.error}</p>
+        <p className="text-danger text-sm">{state.error}</p>
       )}
-      <button
-        type="submit"
-        disabled={pending}
-        className="w-full py-2 px-4 bg-zinc-900 text-white rounded-lg hover:bg-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-      >
+      <button type="submit" disabled={pending} className="btn btn-primary w-full">
         {pending ? 'Criando conta…' : 'Criar conta'}
       </button>
-      <p className="text-center text-sm text-zinc-500">
+      <p className="text-center text-sm text-muted">
         <Link href="/cadastro" className="hover:underline">
           ← Voltar
         </Link>

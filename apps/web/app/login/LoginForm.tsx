@@ -9,7 +9,7 @@ export function LoginForm() {
   return (
     <form action={action} className="space-y-4">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1">
+        <label htmlFor="email" className="field-label">
           Email
         </label>
         <input
@@ -18,11 +18,11 @@ export function LoginForm() {
           type="email"
           required
           autoComplete="email"
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
+          className="field-input"
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium mb-1">
+        <label htmlFor="password" className="field-label">
           Senha
         </label>
         <input
@@ -31,22 +31,18 @@ export function LoginForm() {
           type="password"
           required
           autoComplete="current-password"
-          className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900"
+          className="field-input"
         />
       </div>
       {state?.error && (
-        <p className="text-red-600 text-sm">{state.error}</p>
+        <p className="text-danger text-sm">{state.error}</p>
       )}
-      <button
-        type="submit"
-        disabled={pending}
-        className="w-full py-2 px-4 bg-zinc-900 text-white rounded-lg hover:bg-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-      >
+      <button type="submit" disabled={pending} className="btn btn-primary w-full">
         {pending ? 'Entrando…' : 'Entrar'}
       </button>
-      <p className="text-center text-sm text-zinc-500">
+      <p className="text-center text-sm text-muted">
         Não tem conta?{' '}
-        <Link href="/cadastro" className="text-zinc-900 font-medium hover:underline">
+        <Link href="/cadastro" className="text-primary font-semibold hover:underline">
           Cadastre-se
         </Link>
       </p>

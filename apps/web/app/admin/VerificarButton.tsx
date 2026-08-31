@@ -17,12 +17,12 @@ export default function VerificarButton({ profissionalId }: { profissionalId: st
     <form action={action} className="flex flex-col items-end gap-1">
       <input type="hidden" name="profissionalId" value={profissionalId} />
       {state?.error && (
-        <p className="text-xs text-red-600">{state.error}</p>
+        <p className="text-xs text-danger">{state.error}</p>
       )}
       <button
         type="submit"
         disabled={pending}
-        className="text-xs px-3 py-1 bg-zinc-900 text-white rounded-lg hover:bg-zinc-700 transition-colors disabled:opacity-60"
+        className="btn btn-primary"
       >
         {pending ? 'Verificando...' : 'Verificar'}
       </button>

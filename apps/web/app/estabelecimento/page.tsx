@@ -20,8 +20,8 @@ const STATUS_COLOR: Record<string, string> = {
   ACEITA: 'bg-blue-100 text-blue-700',
   CONFIRMADA: 'bg-blue-100 text-blue-700',
   EM_ANDAMENTO: 'bg-yellow-100 text-yellow-700',
-  CONCLUIDA: 'bg-zinc-100 text-zinc-600',
-  AVALIADA: 'bg-zinc-100 text-zinc-600',
+  CONCLUIDA: 'bg-surface-2 text-muted',
+  AVALIADA: 'bg-surface-2 text-muted',
   CANCELADA: 'bg-red-100 text-red-600',
   NO_SHOW: 'bg-red-100 text-red-600',
 };
@@ -70,17 +70,17 @@ export default async function EstabelecimentoDashboard() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-border px-6 py-4 flex items-center justify-between">
         <span className="font-bold text-lg">VAPT</span>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-zinc-500">{session.email}</span>
-          <Link href="/estabelecimento/perfil" className="text-sm text-zinc-600 hover:text-zinc-900">
+          <span className="text-sm text-muted">{session.email}</span>
+          <Link href="/estabelecimento/perfil" className="text-sm text-muted hover:text-ink">
             Perfil
           </Link>
           <form action={logout}>
             <button
               type="submit"
-              className="text-sm text-zinc-600 hover:text-zinc-900"
+              className="text-sm text-muted hover:text-ink"
             >
               Sair
             </button>
@@ -93,18 +93,18 @@ export default async function EstabelecimentoDashboard() {
           <h1 className="text-2xl font-bold">Meus plantões</h1>
           <Link
             href="/estabelecimento/plantoes/novo"
-            className="px-4 py-2 bg-zinc-900 text-white text-sm rounded-lg hover:bg-zinc-700 transition-colors"
+            className="btn btn-primary"
           >
             + Novo plantão
           </Link>
         </div>
 
         {plantoes.length === 0 ? (
-          <div className="border rounded-xl p-8 text-center text-zinc-500 text-sm">
+          <div className="card p-8 text-center text-muted text-sm">
             <p className="mb-3">Nenhum plantão publicado ainda.</p>
             <Link
               href="/estabelecimento/plantoes/novo"
-              className="inline-block px-4 py-2 bg-zinc-900 text-white text-sm rounded-lg hover:bg-zinc-700 transition-colors"
+              className="btn btn-primary"
             >
               Publicar primeiro plantão
             </Link>
@@ -112,29 +112,29 @@ export default async function EstabelecimentoDashboard() {
         ) : (
           <div className="space-y-3">
             {plantoes.map((p) => (
-              <Link key={p.id} href={`/estabelecimento/plantoes/${p.id}`} className="block border rounded-xl p-5 bg-white hover:border-zinc-300 transition-colors">
+              <Link key={p.id} href={`/estabelecimento/plantoes/${p.id}`} className="card block p-5 hover:border-primary transition-colors">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span
-                        className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_COLOR[p.status] ?? 'bg-zinc-100 text-zinc-600'}`}
+                        className={`text-xs font-medium px-2 py-0.5 rounded-full ${STATUS_COLOR[p.status] ?? 'bg-surface-2 text-muted'}`}
                       >
                         {STATUS_LABEL[p.status] ?? p.status}
                       </span>
-                      <span className="text-xs text-zinc-400">
+                      <span className="text-xs text-muted">
                         {ESPECIALIDADE_LABEL[p.especialidade] ?? p.especialidade}
                       </span>
                     </div>
-                    <p className="text-sm font-medium text-zinc-900 truncate">{p.localizacao}</p>
-                    <p className="text-xs text-zinc-500 mt-1">
+                    <p className="text-sm font-medium text-ink truncate">{p.localizacao}</p>
+                    <p className="text-xs text-muted mt-1">
                       {formatDate(p.dataInicio)} → {formatDate(p.dataFim)}
                     </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-sm font-semibold text-zinc-900">
+                    <p className="text-sm font-semibold text-ink">
                       R$ {Number(p.valorProposto).toFixed(2)}/h
                     </p>
-                    <p className="text-xs text-zinc-400 mt-1">
+                    <p className="text-xs text-muted mt-1">
                       {new Date(p.createdAt).toLocaleDateString('pt-BR')}
                     </p>
                   </div>

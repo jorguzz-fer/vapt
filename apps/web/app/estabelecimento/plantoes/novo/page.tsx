@@ -8,18 +8,18 @@ export default async function NovoPlantaoPage() {
   if (!session || session.role !== 'ESTABELECIMENTO') redirect('/login');
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-surface-2">
       <div className="max-w-2xl mx-auto p-6">
         <div className="mb-6">
-          <Link href="/estabelecimento" className="text-sm text-zinc-500 hover:text-zinc-900">
+          <Link href="/estabelecimento" className="text-sm text-muted hover:text-ink">
             ← Voltar
           </Link>
           <h1 className="text-2xl font-bold mt-2">Novo plantão</h1>
-          <p className="text-sm text-zinc-500 mt-1">
+          <p className="text-sm text-muted mt-1">
             Preencha os dados do plantão para publicar e receber candidaturas.
           </p>
         </div>
-        <div className="bg-white rounded-xl border p-6">
+        <div className="card p-6">
           <NovoPlantaoForm />
         </div>
       </div>

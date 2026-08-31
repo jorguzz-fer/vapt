@@ -15,6 +15,13 @@
       "when": 1782672362265,
       "tag": "0001_serious_doorman",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788180556890,
+      "tag": "0002_warm_mandrill",
+      "breakpoints": true
     }
   ]
 }

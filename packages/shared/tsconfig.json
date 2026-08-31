@@ -6,6 +6,11 @@
     "moduleResolution": "bundler",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "declaration": true
+    "declaration": true,
+    // Os testes rodam no runner nativo do Node, que exige a extensão .ts
+    // explícita no import.
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "types": ["node"]
   }
 }

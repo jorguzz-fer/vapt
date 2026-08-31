@@ -1,5 +1,6 @@
 import { getSession } from '@/lib/session';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import { logout } from '@/app/actions/auth';
 import { apiRequest } from '@/lib/api';
 import VerificarButton from './VerificarButton';
@@ -56,6 +57,12 @@ export default async function AdminPage() {
       <header className="border-b border-border px-6 py-4 flex items-center justify-between">
         <span className="font-bold text-lg">VAPT Admin</span>
         <div className="flex items-center gap-4">
+          <Link
+            href="/admin/configuracoes"
+            className="text-sm font-medium text-primary hover:underline"
+          >
+            Configurações
+          </Link>
           <span className="text-sm text-muted">{session.email}</span>
           <form action={logout}>
             <button type="submit" className="text-sm text-muted hover:text-ink">

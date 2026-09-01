@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { apiRequest } from '@/lib/api';
 import EditPerfilProfissionalForm from './EditPerfilProfissionalForm';
+import { ContaRecebimentoForm } from './ContaRecebimentoForm';
 
 interface PerfilProfissional {
   id: string;
@@ -16,8 +17,19 @@ interface PerfilProfissional {
   email: string;
 }
 
+interface ContaRecebimento {
+  podeReceber: boolean;
+  walletId: string | null;
+}
+
 async function getPerfil(): Promise<PerfilProfissional | null> {
   const res = await apiRequest('/perfil');
+  if (!res.ok) return null;
+  return res.json();
+}
+
+async function getContaRecebimento(): Promise<ContaRecebimento | null> {
+  const res = await apiRequest('/conta-recebimento');
   if (!res.ok) return null;
   return res.json();
 }
@@ -26,7 +38,10 @@ export default async function PerfilProfissionalPage() {
   const session = await getSession();
   if (!session || session.role !== 'PROFISSIONAL') redirect('/login');
 
-  const perfil = await getPerfil();
+  const [perfil, contaRecebimento] = await Promise.all([
+    getPerfil(),
+    getContaRecebimento(),
+  ]);
   if (!perfil) redirect('/profissional');
 
   return (
@@ -68,6 +83,33 @@ export default async function PerfilProfissionalPage() {
               {perfil.crmvAtivo ? 'Ativo' : 'Inativo'}
             </div>
           </div>
+        </div>
+
+        {/* Conta de recebimento */}
+        <div className="card p-6 mb-6">
+          <div className="flex items-start justify-between gap-4 mb-1">
+            <h2 className="text-lg font-semibold">Conta de recebimento</h2>
+            {contaRecebimento?.podeReceber && (
+              <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                Ativa
+              </span>
+            )}
+          </div>
+
+          {contaRecebimento?.podeReceber ? (
+            <p className="text-sm text-muted">
+              Sua conta está ativa. O valor dos plantões é repassado para ela e fica
+              retido até a conclusão do plantão.
+            </p>
+          ) : (
+            <>
+              <p className="text-sm text-muted mb-4">
+                Sem uma conta de recebimento você não pode receber o valor dos
+                plantões. É rápido e só precisa ser feito uma vez.
+              </p>
+              <ContaRecebimentoForm />
+            </>
+          )}
         </div>
 
         {/* Campos editáveis */}

@@ -9,6 +9,9 @@ const ROLE_PATHS: Record<string, string> = {
   '/profissional': 'PROFISSIONAL',
   '/estabelecimento': 'ESTABELECIMENTO',
   '/admin': 'ADMIN',
+  // Painel de status do projeto: expõe lacunas e bloqueadores internos, então
+  // não fica aberto no domínio de produção.
+  '/painel': 'ADMIN',
 };
 
 export async function proxy(request: NextRequest) {

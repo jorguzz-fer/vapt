@@ -58,6 +58,12 @@ export default async function AdminPage() {
         <span className="font-bold text-lg">VAPT Admin</span>
         <div className="flex items-center gap-4">
           <Link
+            href="/painel"
+            className="text-sm font-medium text-primary hover:underline"
+          >
+            Status
+          </Link>
+          <Link
             href="/admin/configuracoes"
             className="text-sm font-medium text-primary hover:underline"
           >

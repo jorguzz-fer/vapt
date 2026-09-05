@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { getSession } from '@/lib/session';
 
@@ -144,8 +143,10 @@ const ROTULO: Record<Estado, string> = {
 };
 
 export default async function PainelPage() {
+  // Página aberta: sem sessão obrigatória. A sessão só decide se o atalho para
+  // o admin aparece, para não deixar link morto para quem chega de fora.
   const session = await getSession();
-  if (!session || session.role !== 'ADMIN') redirect('/login');
+  const ehAdmin = session?.role === 'ADMIN';
 
   const total = RESUMO.prontos + RESUMO.parciais + RESUMO.faltando;
   const larguras = {
@@ -156,11 +157,13 @@ export default async function PainelPage() {
 
   return (
     <main className="mx-auto w-full max-w-4xl px-4 py-10">
-      <div className="mb-6">
-        <Link href="/admin" className="text-sm text-muted hover:text-ink">
-          ← Admin
-        </Link>
-      </div>
+      {ehAdmin && (
+        <div className="mb-6">
+          <Link href="/admin" className="text-sm text-muted hover:text-ink">
+            ← Admin
+          </Link>
+        </div>
+      )}
 
       <header className="border-b border-border pb-7">
         <p className="font-mono text-xs uppercase tracking-[0.16em] text-primary mb-3">
